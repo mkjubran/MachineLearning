@@ -1,2 +1,2 @@
-# MachineLearning-
-MachineLearning 
+# MachineLearning
+MachineLearningTutorials
