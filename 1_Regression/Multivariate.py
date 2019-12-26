@@ -6,26 +6,26 @@ import pdb
 import math
 from word2number import w2n
 
-df = pd.read_csv("HousePrices.csv")
+df = pd.read_csv("HousesPrices_Exercise.csv")
 print(df)
 median_bedrooms = math.floor(df.bedrooms.median())
 df.bedrooms = df.bedrooms.fillna(median_bedrooms)
-
-df.bathrooms = df.bathrooms(pd.to_numeric)
-
-#df.bathrooms = w2n.word_to_num(df['bathrooms'])
 print(df)
 
-#pdb.set_trace()
+df.bathrooms = df.bathrooms.fillna('zero')
+df.bathrooms = df.bathrooms.apply(w2n.word_to_num)
+#median_bathrooms = math.floor(df.bathrooms.median())
+#df.bathrooms = df.bathrooms.fillzero(median_bathrooms)
+print(df)
 
 reg = linear_model.LinearRegression()
-reg.fit(df[['area','bedrooms','age']],df.price)
+reg.fit(df[['area','bedrooms','age','bathrooms']],df.price)
 print(reg.coef_)
 print(reg.intercept_)
 
 
-pprice=reg.predict(df[['area','bedrooms','age']])
-df['reg_price']=pprice
+ppr=reg.predict(df[['area','bedrooms','age','bathrooms']])
+df['reg_price']=ppr
 df['Residual']=df['price']-df['reg_price']
 print(df)
 
